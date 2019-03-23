@@ -23,10 +23,11 @@ class DefaultFormInput extends StatelessWidget {
           right: _margin.right,
           bottom: _margin.bottom),
       child: TextField(
+        key: UniqueKey(),
         decoration: InputDecoration(
             labelText: _labelText,
             focusedBorder:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+            OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             labelStyle: TextStyle(
               color: _labelColor,
               fontWeight: FontWeight.w600,

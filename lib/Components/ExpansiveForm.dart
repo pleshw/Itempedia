@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'FormInput.dart';
 
 class ExpansiveFormState extends State<ExpansiveForm> {
@@ -48,41 +49,57 @@ class ExpansiveFormState extends State<ExpansiveForm> {
 
       children: <Widget>[
         GestureDetector(
-          onHorizontalDragEnd: ( horizontalChange ){
+          onHorizontalDragEnd: (horizontalChange) {
+            double directionController =
+                horizontalChange.velocity.pixelsPerSecond.dy;
 
-            double directionController = horizontalChange.velocity.pixelsPerSecond.dx;
-
-            if( directionController > 0 ) _formForward();
-            if( directionController < 0 ) _formBackward();
-
-
-
+            if (directionController > 0) {
+              _formForward();
+            }
+            if (directionController < 0) {
+              _formBackward();
+            }
           },
           child: SafeArea(
-            child: Container(
+              child: Container(
             height: 180,
             width: 500,
             child: Column(
               children: <Widget>[
                 Expanded(
-                  child: _formInputs[appendedFormIndex],
+                  child: Container(
+                    height: 70,
+                    child: ListView.builder(
+                        itemCount: _formInputs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                              height: 90, child: _formInputs[index]);
+                        }),
+                  ),
                 ),
                 Center(
-                  heightFactor: 2,
-                  child: RaisedButton(
-                    padding: EdgeInsets.only(top: 7, bottom: 7),
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 20),
+                    height: 40,
+                    width: 40,
+                    child: RaisedButton(
+                      padding: EdgeInsets.only(top: 7, bottom: 7),
+                      child: Icon(
+                        Icons.attach_file,
+                        color: Colors.white,
+                      ),
+                      key: UniqueKey(),
+                      color: _fontColor,
+                      onPressed: () {
+                        return null;
+                      }, // TO-DO: Check missing info and redirect to those text fields.
                     ),
-                    color: _fontColor,
-                    onPressed: (){ return null; }, // TO-DO: Check missing info and redirect to those text fields.
                   ),
                 ),
               ],
             ),
           )),
-        )
+        ),
       ],
     );
   }
